@@ -1,0 +1,110 @@
+<main>
+  <p id="notice"><%= flash[:notice] %></p>
+  <p id="notice"><%= flash[:success] %></p>
+  <div class='container px-5 px-sm-0'>
+    <div class='row'>
+      <div class='col-md-3'>
+        <h2>User info</h2>
+        <table class='table'>
+          <tr>
+            <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %>
+          </tr>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </table>
+        <div class='row'>
+          <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+           <span class="fas fa-user-cog"></span>
+          <% end %>
+        </div>
+
+        <div class='row'>
+          <%= link_to new_spot_path, class: "btn btn-primary btn-block" do %>
+           <span>新規投稿</span>
+          <% end %>
+        </div>
+      </div>
+      <div class='col-md-8 offset-md-1'>
+        <h2>国内スポット一覧</h2>
+        <table class='table table-hover table-inverse'>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>スポット名</th>
+              <th>キャプション</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @spotjapan.each do |spot| %>
+            <tr>
+              <td>
+                <%= link_to user_path(spot.user) do %>
+                 <%= attachment_image_tag spot.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to spot_path(spot) do %>
+                 <%= attachment_image_tag spot, :image, :size =>'320x480' %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to spot_path(spot) do %>
+                 <%= spot.spot_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= spot.caption %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <h2>海外スポット一覧</h2>
+        <table class='table table-hover table-inverse'>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>スポット名</th>
+              <th>キャプション</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @spotabroad.each do |spot| %>
+            <tr>
+              <td>
+                <%= link_to user_path(spot.user) do %>
+                 <%= attachment_image_tag spot.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %>
+                <% end %>
+              </td>
+              <td>
+                 <%= attachment_image_tag spot, :image, width: 220, height: 160,
+                          class: "img-resize, rounded mx-auto d-block",
+                          style: "object-fit: cover;" %>
+              </td>
+              <td>
+                <%= link_to spot_path(spot) do %>
+                 <%= spot.spot_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= spot.caption %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
